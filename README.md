@@ -1,55 +1,33 @@
-# HW25:
+# HW25: Stack with Max and NumberBox Implementation
 
 ## Task Definition
 
-### Task 1: Implement a Stack with Max Operation in O(1)
+This homework contains two main tasks:
+
+1. Implement a stack with O(1) max operation (`MyStackInt`).
+2. Implement a number container with efficient addition, removal, filtering, and deduplication (`NumberBox`).
+
+---
+
+### Task 1: `MyStackInt`
 
 #### Description
 
-Implement a class `MyStackInt` — a stack for integers that supports the following operations:
+Implement a class `MyStackInt` — a stack for integers that supports:
 
-1. **Push** a number onto the top of the stack (`push`)
-2. **Pop** a number from the top of the stack and return it (`pop`)
-3. **Retrieve the maximum number** in the stack (`max`)
+-   **Push** a number (`push`)
+-   **Pop** a number (`pop`)
+-   **Retrieve the maximum** number (`max`)
 
-All methods must run in **O(1)** time complexity.
-
----
+All operations must run in **O(1)** time.
 
 #### Method Requirements
 
-##### `push(num: int) -> None`
+-   `push(num: int) -> None`
+-   `pop() -> int` — raises `IndexError` if empty
+-   `max() -> int` — raises `IndexError` if empty
 
--   Adds the number `num` to the top of the stack.
-
-##### `pop() -> int`
-
--   Removes the number at the top of the stack and returns it.
--   Raises `IndexError` if the stack is empty.
-
-##### `max() -> int`
-
--   Returns the maximum number in the stack.
--   Raises `IndexError` if the stack is empty.
-
----
-
-#### Additional Requirements
-
--   All methods must have **O(1)** time complexity.
--   The stack should only store integer (`int`) values.
-
----
-
-#### Testing
-
-Write tests to verify:
-
-1. Correct behavior of `push` and `pop`.
-2. Correct behavior of `max` after multiple push and pop operations.
-3. Proper `IndexError` handling when calling `pop` or `max` on an empty stack.
-
-**Example usage:**
+#### Example usage
 
 ```python
 s = MyStackInt()
@@ -60,135 +38,108 @@ assert s.pop() == 5
 assert s.max() == 3
 ```
 
-### Task 2: Implementation of `NumberBox` Class
+---
+
+### Task 2: `NumberBox`
 
 #### Description
 
-You need to implement a class `NumberBox` — a data structure for storing integers with support for efficient addition, removal, and filtering of elements.
+Implement a class `NumberBox` for storing integers with efficient operations:
 
-The implementation should prioritize **efficiency** of the underlying data structure for all operations.
+-   Adding a number
+-   Removing a number
+-   Removing numbers by predicate
+-   Removing numbers in a range
+-   Removing duplicates
+-   Iteration
 
-After implementing the class, you should also write tests to verify that all methods work correctly.
+All operations should be efficient and suitable for large datasets.
 
----
+#### Method Requirements
 
-#### `NumberBox` Class Requirements
-
-##### Methods
-
-1. **Constructor**
-
-```python
-NumberBox()
-```
-
--   Initializes the container.
--   Choose the most **efficient internal data structure** for storing numbers.
-
----
-
-2. **Add a number**
-
-```python
-addNumber(num: int)
-```
-
--   Adds the integer `num` to the `NumberBox`.
+-   `add_number(num: int) -> None`
+-   `remove_number(num: int) -> int | None`
+-   `remove_numbers_predicate(pred: Callable[[int], bool]) -> int`
+-   `remove_numbers_range(min: int, max: int) -> int`
+-   `distinct() -> int`
+-   `__iter__() -> Iterator[int]`
 
 ---
-
-3. **Remove a number**
-
-```python
-removeNumber(num: int) -> int | None
-```
-
--   Removes the **first occurrence** of `num`.
--   Returns the removed number, or `None` if the number is not in the container.
-
----
-
-4. **Remove numbers by predicate**
-
-```python
-removeNumbersPredicate(pred: Callable[[int], bool]) -> int
-```
-
--   Removes all numbers for which `pred(number)` returns `True`.
--   `pred` is a function that takes an integer and returns `True` if it should be removed.
--   Returns the count of numbers removed.
-
----
-
-5. **Remove numbers in a range**
-
-```python
-removeNumbersRange(min: int, max: int) -> int
-```
-
--   Removes all numbers where `min <= number <= max`.
--   Returns the count of numbers removed.
-
----
-
-6. **Iteration**
-
-```python
-__iter__() -> Iterator[int]
-```
-
--   Allows iterating over all numbers in the `NumberBox`.
--   The order can follow the order of insertion or any other order suitable for the chosen efficient data structure.
-
----
-
-7. **Remove duplicates**
-
-```python
-distinct() -> int
-```
-
--   Removes all duplicate numbers, leaving only unique numbers.
--   Returns the count of duplicates removed.
-
----
-
-#### Testing
-
--   You must write tests for all methods:
-
-    -   Adding and removing numbers.
-    -   Removing numbers by predicate.
-    -   Removing numbers by range.
-    -   Iteration over elements.
-    -   Removing duplicates.
-
--   Tests should verify correct return values and container state after each operation.
-
----
-
-#### Notes
-
--   Consider the choice of data structure carefully: efficient addition, removal, and uniqueness checks are important.
--   All methods should handle large datasets efficiently.
 
 ## 📝 Description
 
+-   `MyStackInt` uses two internal stacks to maintain O(1) push, pop, and max operations.
+-   `NumberBox` uses `SortedList` for efficient addition, removal, and range operations.
+
 ## 🎯 Purpose
+
+-   Practice implementing optimized data structures.
+-   Handle edge cases with proper error handling.
+-   Test data structure functionality with unit tests.
 
 ## 🔍 How It Works
 
+-   `MyStackInt` maintains a separate `_max_stack` for tracking current maximum.
+-   `NumberBox` maintains a sorted list internally, supporting efficient queries and removals.
+
 ## 📜 Output Example
+
+```python
+# MyStackInt
+s = MyStackInt()
+s.push(3)
+s.push(5)
+print(s.max())  # 5
+
+# NumberBox
+nb = NumberBox()
+nb.add_number(3)
+nb.add_number(1)
+print(list(nb))  # [1, 3]
+```
 
 ## 📦 Usage
 
+1. Clone the repository.
+2. Implement missing methods if any.
+3. Run tests to verify correctness.
+
 ## 🧪 Running Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 ## ✅ Dependencies
 
+-   Python 3.10+
+-   `sortedcontainers` package
+
 ## 🗂 Project Structure
 
+```
+.
+├── main.py
+├── .gitignore
+├── /.vscode
+│   ├── launch.json
+│   ├── settings.json
+│   └── tasks.json
+├── src
+│   ├── __init__.py
+│   ├── my_stack_int.py
+│   └── number_box.py
+└── tests
+    ├── __init__.py
+    ├── test_my_stack_int.py
+    └── test_number_box.py
+```
+
 ## 📊 Project Status
+
+✅ Implemented `MyStackInt`
+✅ Implemented `NumberBox`
+✅ All unit tests passing
 
 ## 📄 License
 
@@ -197,6 +148,8 @@ MIT License
 ---
 
 ## 🧮 Conclusion
+
+This homework demonstrates efficient stack and container implementations in Python, along with comprehensive unit testing.
 
 ---
 
